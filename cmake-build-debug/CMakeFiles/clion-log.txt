@@ -1,0 +1,4 @@
+C:\Users\ParthSchool\.CLion2019.3\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /cygdrive/e/C++/Universe
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /cygdrive/e/C++/Universe/cmake-build-debug
