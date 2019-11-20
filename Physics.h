@@ -10,10 +10,15 @@
 
 class Physics {
 
+    private:
+        static float vector_magnitude(float vector[2]);
+
     public:
         constexpr static float deltaTime = 0.1f;
-        void add_force(MassObject massObject, const float force[2]);
-        void set_motion(MassObject massObject);
+        static void add_force(MassObject massObject, const float force[2]);
+        static void set_motion(MassObject massObject);
+        static bool collision(MassObject object1, MassObject object2);
+        static void on_collide(MassObject object1, MassObject object2);
 };
 
 

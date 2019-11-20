@@ -4,9 +4,10 @@
 
 #include "MassObject.h"
 
-MassObject::MassObject(float object_mass, float object_radius, float (&object_position)[2], float (&object_velocity)[2], float (&object_acceleration)[2]) : position(object_position), velocity(object_velocity), acceleration(object_acceleration) {
+MassObject::MassObject(float object_mass, float object_radius, float object_elasticity, float (&object_position)[2], float (&object_velocity)[2], float (&object_acceleration)[2]) : position(object_position), velocity(object_velocity), acceleration(object_acceleration) {
     mass = object_mass;
     radius = object_radius;
+    elasticity = object_elasticity;
 }
 
 float MassObject::get_mass() {
@@ -15,6 +16,10 @@ float MassObject::get_mass() {
 
 float MassObject::get_radius() {
     return radius;
+}
+
+float MassObject::get_elasticity() {
+    return elasticity;
 }
 
 float* MassObject::get_position() {

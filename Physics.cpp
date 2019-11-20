@@ -2,6 +2,7 @@
 // Created by ParthSchool on 11/18/2019.
 //
 
+#include <cmath>
 #include "Physics.h"
 
 void Physics::add_force(MassObject massObject, const float force[2]) {
@@ -22,4 +23,31 @@ void Physics::set_motion(MassObject massObject) {
 
     massObject.set_velocity(new_velocity);
     massObject.set_position(new_position);
+}
+
+bool Physics::collision(MassObject object1, MassObject object2) {
+    float distance[2] = {object2.get_position()[0] - object1.get_position()[0], object2.get_position()[1] - object1.get_position()[1]};
+    float radius_distance = object1.get_radius() + object2.get_radius();
+    return pow(radius_distance, 2) >= pow(distance[0], 2) + pow(distance[1], 2);
+}
+
+void Physics::on_collide(MassObject object1, MassObject object2) {
+    float distance[2] = {(object2.get_position()[0] - object1.get_position()[0]), (object2.get_position()[1] - object1.get_position()[1])};
+    float collision_normal[2] = {distance[0] / vector_magnitude(distance), distance[1] / vector_magnitude(distance)};
+    float relative_velocity[2] = {object2.get_velocity()[0] - object1.get_velocity()[0], object2.get_velocity()[1] - object1.get_velocity()[1]};
+
+    float normal_velocity = (relative_velocity[0] * collision_normal[0]) + (relative_velocity[1] * collision_normal[1]);
+    float elasticity = fminf(object1.get_elasticity(), object2.get_elasticity());
+    float impulse_constant = (-(1 + elasticity) * normal_velocity) / ((1 / object1.get_mass()) + (1 / object2.get_mass()));
+
+    float impulse[2] = {impulse_constant * collision_normal[0], impulse_constant * collision_normal[1]};
+    float object1_new_v[2] = {object1.get_velocity()[0] - ((1 / object1.get_mass()) * impulse[0]), object1.get_velocity()[1] - ((1 / object1.get_mass()) * impulse[1])};
+    float object2_new_v[2] = {object2.get_velocity()[0] + ((1 / object2.get_mass()) * impulse[0]), object2.get_velocity()[1] + ((1 / object2.get_mass()) * impulse[1])};
+
+    object1.set_velocity(object1_new_v);
+    object2.set_velocity(object2_new_v);
+}
+
+float Physics::vector_magnitude(float vector[2]) {
+    return sqrt(pow(vector[0], 2) + pow(vector[1], 2));
 }
