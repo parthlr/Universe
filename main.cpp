@@ -1,26 +1,51 @@
 #include <iostream>
-#include "Universe.h"
-#include "MassObject.h"
-#include "Physics.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow *window) {
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
 
 int main() {
-    float position1[2] = {0.0f, 0.0f};
-    float position2[2] = {10.0f, 0.0f};
-    float velocity1[2] = {2.0f, 0.0f};
-    float velocity2[2] = {-2.0f, 0.0f};
-    float acceleration[2] = {0.0f, 0.0f};
-    MassObject massObject1(12, 2, 2, position1, velocity1, acceleration);
-    MassObject massObject2(10, 2, 2, position2, velocity2, acceleration);
-    int iterations = 0;
-    while(iterations < 1000) {
-        Physics::set_motion(massObject1);
-        Physics::set_motion(massObject2);
-        std::cout << "X1: " << massObject1.get_position()[0] << " Y1: " << massObject1.get_position()[1] << "\n";
-        std::cout << "X2: " << massObject2.get_position()[0] << " Y2: " << massObject2.get_position()[1] << "\n";
-        if (Physics::collision(massObject1, massObject2)) {
-            Physics::on_collide(massObject1, massObject2);
-        }
-        iterations++;
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
     }
+    glfwMakeContextCurrent(window);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+    glViewport(0, 0, 800, 600);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    while(!glfwWindowShouldClose(window)) {
+        processInput(window);
+
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
     return 0;
 }

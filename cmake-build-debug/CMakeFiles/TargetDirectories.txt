@@ -1,3 +1,0 @@
-/cygdrive/e/C++/Universe/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/e/C++/Universe/cmake-build-debug/CMakeFiles/Universe.dir
-/cygdrive/e/C++/Universe/cmake-build-debug/CMakeFiles/edit_cache.dir
