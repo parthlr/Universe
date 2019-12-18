@@ -1,5 +1,5 @@
 //
-// Created by ParthSchool on 11/18/2019.
+// Created by Parth on 11/18/2019.
 //
 
 #include <cmath>
@@ -27,7 +27,7 @@ void Physics::set_motion(MassObject massObject) {
 
 bool Physics::collision(MassObject object1, MassObject object2) {
     float distance[2] = {object2.get_position()[0] - object1.get_position()[0], object2.get_position()[1] - object1.get_position()[1]};
-    float radius_distance = object1.get_radius() + object2.get_radius();
+    float radius_distance = object1.get_radius() / 1920 + object2.get_radius() / 1920;
     return pow(radius_distance, 2) >= pow(distance[0], 2) + pow(distance[1], 2);
 }
 

@@ -1,5 +1,5 @@
 //
-// Created by ParthSchool on 11/11/2019.
+// Created by Parth on 11/11/2019.
 //
 
 #ifndef UNIVERSE_GALAXY_H
